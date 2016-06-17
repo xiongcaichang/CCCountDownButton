@@ -9,6 +9,12 @@
 
 开始倒计时
 
-```
+```objc
  [button countDownWithTimeInterval:10];
 ```
+
+
+### 截图
+
+
+<img src="https://github.com/xiongcaichang/CCCountDownButton/blob/master/demo.gif" alt="Drawing" width="300px" />
