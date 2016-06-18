@@ -60,10 +60,10 @@
     self.leaveTime = duration;
     
     self.enabled=NO;
-   self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(countDown)];
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(countDown)];
     self.displayLink.frameInterval=60;
     
-    [self.displayLink  addToRunLoop: [NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.displayLink  addToRunLoop: [NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     
     
     
@@ -71,6 +71,7 @@
 
 -(void)countDown{
     self.leaveTime--;
+    
     [self setTitle:[NSString stringWithFormat:@"剩余%d秒",(int)self.leaveTime] forState:UIControlStateDisabled];
     if (self.leaveTime == 0) {
         [self.displayLink invalidate];
