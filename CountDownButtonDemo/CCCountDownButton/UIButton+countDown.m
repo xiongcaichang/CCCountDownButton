@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
-@property (nonatomic, strong) NSString *titleString;
 
 @property (nonatomic, assign) NSTimeInterval leaveTime;
 @end
@@ -23,7 +22,7 @@
 
   static NSString *displayLinkKey;
   static NSString *leaveTimeKey;
-  static NSString *titleStringKey;
+  static NSString *countDownFormatKey;
 
 -(void)setDisplayLink:(CADisplayLink *)displayLink{
     
@@ -44,18 +43,17 @@
 }
 
 
--(void)setTitleString:(NSString *)titleString{
-    objc_setAssociatedObject(self, &titleStringKey, titleString, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+-(void)setCountDownFormat:(NSString *)countDownFormat{
+    objc_setAssociatedObject(self, &countDownFormatKey, countDownFormat, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(NSString *)titleString{
+-(NSString *)countDownFormat{
     
-    return objc_getAssociatedObject(self, &titleStringKey);
+    return objc_getAssociatedObject(self, &countDownFormatKey);
     
 }
 
 -(void)countDownWithTimeInterval:(NSTimeInterval) duration{
-    self.titleString=self.currentTitle;
     
     self.leaveTime = duration;
     
@@ -72,12 +70,15 @@
 -(void)countDown{
     self.leaveTime--;
     
-    [self setTitle:[NSString stringWithFormat:@"剩余%d秒",(int)self.leaveTime] forState:UIControlStateDisabled];
+    if (!self.countDownFormat) {
+        self.countDownFormat=@"剩余%d秒";
+    }
+    
+    [self setTitle:[NSString stringWithFormat:self.countDownFormat,(int)self.leaveTime] forState:UIControlStateDisabled];
     if (self.leaveTime == 0) {
         [self.displayLink invalidate];
         self.displayLink=nil;
         self.enabled=YES;
-        [self setTitle:self.titleString forState:UIControlStateNormal];
     }
     
 }

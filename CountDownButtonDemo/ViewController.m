@@ -34,6 +34,9 @@
 }
 
 -(void)startCountDown:(UIButton *)btn{
+    
+    btn.countDownFormat=@"%d秒后重试";
+    
     [btn countDownWithTimeInterval:10];
 }
 

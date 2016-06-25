@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UIButton (countDown)
+
+@property (nonatomic, strong) NSString *countDownFormat;
+
 -(void)countDownWithTimeInterval:(NSTimeInterval) duration;
+
 @end
